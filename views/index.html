@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -27,5 +27,56 @@
     <ul id="listing"></ul>
     <div class="card-container"></div>
     <script src="./js/index.js"></script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+  </head>
+  <body>
+    <input
+      type="file"
+      id="fileimages"
+      name="fileimages"
+      accept=".jpg, .jpeg, .png"
+      multiple
+    />
+    <ul id="listing"></ul>
+    <script>
+      const fileimages = document.querySelector("#fileimages");
+      fileimages.addEventListener("change", () => {
+        const curFiles = fileimages.files;
+        let output = document.getElementById("listing");
+        if (curFiles.length > 0) {
+          for (const file of curFiles) {
+            let item = document.createElement("li");
+            item.textContent = `Name: ${file.name}, size: ${returnFileSize(
+              file.size
+            )}`;
+
+            const image = document.createElement("img");
+            image.src = URL.createObjectURL(file);
+            item.appendChild(image);
+            output.appendChild(item);
+          }
+        }
+      });
+
+      function returnFileSize(number) {
+        if (number < 1024) {
+          return `${number} bytes`;
+        } else if (number >= 1024 && number < 1048576) {
+          return `${(number / 1024).toFixed(1)} KB`;
+        } else if (number >= 1048576) {
+          return `${(number / 1048576).toFixed(1)} MB`;
+        }
+      }
+    </script>
   </body>
 </html>
