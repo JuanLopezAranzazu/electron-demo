@@ -31,9 +31,17 @@ saveButton.addEventListener("click", () => {
   ipcRenderer.send("create-product", data);
 });
 
+const cardContainer = document.querySelector(".card-container");
+
 ipcRenderer.on("get-products", (event, args) => {
   console.log(args);
   const products = JSON.parse(args);
+  let listProducts = "";
+  for (let index = 0; index < products.length; index++) {
+    const element = products[index];
+    listProducts += `<div class="card"><p>${element.name}</p></div>`;
+  }
+  cardContainer.innerHTML = listProducts;
   console.log(products);
 });
 
